@@ -1,6 +1,6 @@
 import Button from "../form/Button";
 import Input from "../form/Input";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useAuth, useAxios } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -19,15 +19,13 @@ export default function Login() {
 
     function handleClick(e) {
         e.preventDefault()
-        try {
-            axios.post('http://127.0.0.1:8000/api/auth/login', user).then(res => {
-                auth.setUser(res.data)
-                console.log(res.data)
-            })
-        } catch (err) {
-            console.log(err)
-        }
+        axios.post('/auth/login', user).then(res => {
+            auth.setUser(res.data)
+            navigate('/')
+        })
     }
+
+
     return (
         <div>
             <form action="" className="mx-auto" >
