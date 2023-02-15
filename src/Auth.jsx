@@ -10,9 +10,9 @@ export function AuthProvider({ children }) {
 }
 
 export function AuthGuard({ children }) {
-    const token = window.localStorage.getItem('token')
+    const token = JSON.parse(window.localStorage.getItem('token'))
 
-    if (!token) return <Navigate to='/login' />
+    if (!token || token?.message) return <Navigate to='/login' />
 
     return <>{children}</>
 }

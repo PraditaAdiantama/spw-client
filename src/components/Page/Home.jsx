@@ -6,7 +6,6 @@ export default function Home() {
         window.localStorage.removeItem('token')
         window.location.reload()
     }
-
     return (
         <div>
             <AuthGuard>
