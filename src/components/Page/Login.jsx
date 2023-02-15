@@ -21,10 +21,10 @@ export default function Login() {
         e.preventDefault()
         axios.post('/auth/login', user).then(res => {
             auth.setUser(res.data)
+            window.localStorage.setItem('token', JSON.stringify(res.data))
             navigate('/')
         })
     }
-
 
     return (
         <div>

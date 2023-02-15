@@ -1,18 +1,18 @@
-import { useContext, createContext, useState, useEffect } from 'react'
-import {Navigate} from 'react-router-dom'
+import { createContext, useState } from 'react'
+import { Navigate } from 'react-router-dom'
 
 export const AuthContext = createContext({})
 
-export function AuthProvider({children}){
-    const [user,setUser] = useState();
+export function AuthProvider({ children }) {
+    const [user, setUser] = useState();
 
-    return <AuthContext.Provider value={{ user,setUser }}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>
 }
 
-export function AuthGuard({children}){
-    const auth = useContext(AuthContext)
+export function AuthGuard({ children }) {
+    const token = window.localStorage.getItem('token')
 
-    if(!auth.user) return <Navigate to='/login'/>
+    if (!token) return <Navigate to='/login' />
 
     return <>{children}</>
 }
