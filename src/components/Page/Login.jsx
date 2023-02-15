@@ -26,6 +26,7 @@ export default function Login() {
         })
     }
 
+    const token = JSON.parse(localStorage.getItem('token'))
     return (
         <div>
             <form action="" className="mx-auto" >
@@ -33,6 +34,7 @@ export default function Login() {
                 <Input type="text" name="username" onChange={handleChange} />
                 <label >Password</label>
                 <Input type="password" name="password" onChange={handleChange} />
+                {token?.message ? <div className="alert alert-danger">{token?.message}</div>: ''}
                 <Button text="Login" color="btn btn-primary" onClick={handleClick} />
             </form>
         </div>
