@@ -1,4 +1,4 @@
-import { AuthGuard } from "../../Auth";
+import { AuthGuard } from "../Auth";
 
 export default function Home() {
 
@@ -6,6 +6,7 @@ export default function Home() {
         window.localStorage.removeItem('token')
         window.location.reload()
     }
+    
     return (
         <div>
             <AuthGuard>

@@ -1,11 +1,10 @@
-import Button from "../form/Button";
-import Input from "../form/Input";
-import { useState,useEffect } from "react";
-import { useAuth, useAxios } from "../../hooks";
+import Button from "../components/form/Button";
+import Input from "../components/form/Input";
+import { useState } from "react";
+import { useAxios } from "../hooks";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const auth = useAuth()
     const axios = useAxios()
     const navigate = useNavigate()
     const [user, setUser] = useState({
@@ -20,7 +19,6 @@ export default function Login() {
     function handleClick(e) {
         e.preventDefault()
         axios.post('/auth/login', user).then(res => {
-            auth.setUser(res.data)
             window.localStorage.setItem('token', JSON.stringify(res.data))
             navigate('/')
         })
@@ -34,7 +32,7 @@ export default function Login() {
                 <Input type="text" name="username" onChange={handleChange} />
                 <label >Password</label>
                 <Input type="password" name="password" onChange={handleChange} />
-                {token?.message ? <div className="alert alert-danger">{token?.message}</div>: ''}
+                {token?.message ? <div className="alert alert-danger">{token?.message}</div> : ''}
                 <Button text="Login" color="btn btn-primary" onClick={handleClick} />
             </form>
         </div>
