@@ -14,7 +14,6 @@ export default function Product() {
         stock: 0,
         catalog_id: 0
     })
-    const token = JSON.parse(localStorage.getItem('token'))
 
     let num = 1;
 

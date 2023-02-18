@@ -1,4 +1,11 @@
-form {
-  max-width: 500px;
-  padding-top:  calc(100vh - 70vh);
+.container{
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.content-center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
 }

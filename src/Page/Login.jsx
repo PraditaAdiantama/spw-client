@@ -1,16 +1,19 @@
 import Button from "../components/form/Button";
 import Input from "../components/form/Input";
 import { useState } from "react";
-import { useAxios } from "../hooks";
+import { useAuth, useAxios } from "../hooks";
 import { useNavigate } from "react-router-dom";
+import { AuthGuest } from "../Auth";
 
 export default function Login() {
     const axios = useAxios()
+    const auth = useAuth()
     const navigate = useNavigate()
     const [user, setUser] = useState({
         username: "",
         password: ""
     })
+    const [alert, setAlert] = useState("")
 
     function handleChange(e) {
         setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -19,22 +22,30 @@ export default function Login() {
     function handleClick(e) {
         e.preventDefault()
         axios.post('/auth/login', user).then(res => {
-            window.localStorage.setItem('token', JSON.stringify(res.data))
-            navigate('/')
+            localStorage.setItem('token', res.data.token)
+            auth.load()
+            setTimeout(() => {
+                navigate('/')
+            },1000)
         })
     }
 
-    const token = JSON.parse(localStorage.getItem('token'))
     return (
-        <div>
-            <form action="" className="mx-auto" >
+        <AuthGuest>
+            <form action="" className="content-center container" >
                 <label>Username</label>
                 <Input type="text" name="username" onChange={handleChange} />
                 <label >Password</label>
                 <Input type="password" name="password" onChange={handleChange} />
-                {token?.message ? <div className="alert alert-danger">{token?.message}</div> : ''}
+                {auth.alert &&
+                    <div className="alert alert-danger d-flex align-items-center" role="alert">
+                        <div>
+                            An example danger alert with an icon
+                        </div>
+                    </div>
+                }
                 <Button text="Login" color="btn btn-primary" onClick={handleClick} />
             </form>
-        </div>
+        </AuthGuest>
     )
 }
