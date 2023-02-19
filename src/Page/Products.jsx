@@ -14,6 +14,7 @@ export default function Product() {
         stock: 0,
         catalog_id: 0
     })
+    const [catalogs,setCatalogs] = useState([])
     const [showModal, setShowModal] = useState(false)
 
     let num = 1;
@@ -26,7 +27,9 @@ export default function Product() {
         axios.get('/products').then(res => {
             setProducts(res.data.products)
         })
-
+        axios.get('/catalogs').then(res => {
+            setCatalogs(res.data.catalogs)
+        })
     }
 
     function handleDelete(id) {
@@ -73,7 +76,12 @@ export default function Product() {
                                     <label>Stock</label>
                                     <Input name="stock" onChange={handleChange} />
                                     <label>Category</label>
-                                    <Input name="catalog_id" onChange={handleChange} />
+                                    <br />
+                                    <select name="catalog_id" onChange={handleChange} className="bg-white text-dark py-2 w-100">
+                                        {catalogs.map(catalog => (
+                                            <option key={catalog.id} value={catalog.id}>{catalog.name}</option>
+                                        ))}
+                                    </select>
                                     <div className="modal-footer">
                                         <Button type="sumbit" text="Create" data-bs-dismiss="modal" color="btn btn-success" />
                                     </div>
