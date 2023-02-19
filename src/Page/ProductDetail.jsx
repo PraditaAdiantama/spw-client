@@ -8,19 +8,16 @@ import Input from "../components/form/Input";
 export default function ProductDetail() {
     const axios = useAxios()
     const params = useParams()
-    const token = JSON.parse(window.localStorage.getItem('token'))
 
     const [products, setProducts] = useState([])
-    const [newProduct, setNewProduct] = useState({
-        name: "",
-        price: 0,
-        stock: 0,
-        catalog_id: 0
-    })
+    const [catalog,setCatalog] = useState([])
 
     useEffect(() => {
         axios.get('/products/' + params.id).then(res => {
             setProducts(res.data.product)
+        })
+        axios.get('/catalogs').then(res => {
+            setCatalog(res.data.catalogs)
         })
     }, [])
 

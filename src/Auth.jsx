@@ -44,4 +44,6 @@ export function AuthGuard({ children }) {
 export function AuthGuest({children}){
     const auth = useAuth()
     if(auth.user) return <Navigate to='/' />
+
+    return <>{children}</>
 }
